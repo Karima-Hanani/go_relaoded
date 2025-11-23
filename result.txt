@@ -1,1 +1,3 @@
- karima hanani hel'lo ,    (cap, 2)
+ (up) 111 (bin) 42     (hex)
+ (hex)
+ (bin)
