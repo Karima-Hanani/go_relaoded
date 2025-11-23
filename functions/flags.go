@@ -6,7 +6,6 @@ import (
 )
 
 func Flag(line []string) []string {
-	count := 1
 	for i := 0; i < len(line); i++ {
 		op := line[i]
 		if op == "(cap)" {
@@ -14,14 +13,11 @@ func Flag(line []string) []string {
 				if line[j] != "" {
 					break
 				}
-				count++
 			}
-			if i != 0 && i-count >= 0 {
-
-				line[i-count] = strings.Title(line[i-count])
+			if i != 0 && i-1 >= 0 {
+				line[i-1] = Capitalize(line[i-1])
 			}
 			line = append(line[:i], line[i+1:]...)
-			count = 1
 			i--
 			continue
 		}
@@ -31,13 +27,12 @@ func Flag(line []string) []string {
 				if line[j] != "" {
 					break
 				}
-				count++
+
 			}
-			if i != 0 && i-count >= 0 {
-				line[i-count] = strings.ToUpper(line[i-count])
+			if i != 0 && i-1 >= 0 {
+				line[i-1] = strings.ToUpper(line[i-1])
 			}
 			line = append(line[:i], line[i+1:]...)
-			count = 1
 			i--
 			continue
 		}
@@ -47,13 +42,12 @@ func Flag(line []string) []string {
 				if line[j] != "" {
 					break
 				}
-				count++
+
 			}
-			if i != 0 && i-count >= 0 {
-				line[i-count] = strings.ToLower(line[i-count])
+			if i != 0 && i-1 >= 0 {
+				line[i-1] = strings.ToLower(line[i-1])
 			}
 			line = append(line[:i], line[i+1:]...)
-			count = 1
 			i--
 			continue
 		}
@@ -63,20 +57,19 @@ func Flag(line []string) []string {
 				if line[j] != "" {
 					break
 				}
-				count++
+
 			}
-			if i != 0 && i-count >= 0 {
-				n, err := strconv.ParseInt(line[i-count], 2, 64)
+			if i != 0 && i-1 >= 0 {
+				n, err := strconv.ParseInt(line[i-1], 2, 64)
 				if err != nil {
 					line = append(line[:i], line[i+1:]...)
 					i--
 					continue
 				} else {
-					line[i-count] = strconv.Itoa(int(n))
+					line[i-1] = strconv.Itoa(int(n))
 				}
 			}
 			line = append(line[:i], line[i+1:]...)
-			count = 1
 			i--
 			continue
 		}
@@ -86,24 +79,21 @@ func Flag(line []string) []string {
 				if line[j] != "" {
 					break
 				}
-				count++
 			}
 			if i != 0 {
-				n, err := strconv.ParseInt(line[i-count], 16, 64)
+				n, err := strconv.ParseInt(line[i-1], 16, 64)
 				if err != nil {
 					line = append(line[:i], line[i+1:]...)
 					i--
 					continue
 				} else {
-					line[i-count] = strconv.Itoa(int(n))
+					line[i-1] = strconv.Itoa(int(n))
 				}
 			}
 			line = append(line[:i], line[i+1:]...)
-			count++
 			i--
 			continue
 		}
 	}
-
 	return line
 }

@@ -20,11 +20,6 @@ func main() {
 	}
 
 	input := project.Convert(strings.Split(project.ReadFile(os.Args[1]), "\n"))
-
 	fmt.Println(input)
 
-	fmt.Println("_______________________________________")
-
-	test := []string{"karima","(up,","6)"}
-	project.FlagWithPara(test)
 }

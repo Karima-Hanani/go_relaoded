@@ -1,5 +1,8 @@
-hello(cap) karima (up, 6) fz (hex) 12 (bin)
-hello (cap)  WORLD (low)
-1A (hex) 2FF (hex) Z111 (hex) 01  (hex)
+hello  ,  (cap) karima (up, 0) fz (hex) 111 ; (bin)
+hello (cap)  WORLD (LOW) (low)
+1A (hex) 2FF (hex) Z111 (hex) 01  (bin)
 hello (CAP)  karima 
-(up) gkhjh
+(up, 9) gkhjh
+kjd dhjf  fdf djhf d jhd hsdqkj qs (cap, 1000)
+'a errr
+'an err
