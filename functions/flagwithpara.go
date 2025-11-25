@@ -37,6 +37,8 @@ func FlagWithPara(line []string) []string {
 				break
 			}
 			line = append(line[:i], line[i+2:]...)
+			i -= 2
+			tempstr = ""
 		}
 	}
 	return line
