@@ -1,4 +1,1 @@
- (up) 111 (bin) 42     (hex)
- (hex)
- (bin)
-hello, , ,
+hello ' karima ' don't hi , , , ,

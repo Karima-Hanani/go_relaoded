@@ -1,7 +1,6 @@
 package project
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -22,9 +21,16 @@ func Convert(input []string) string {
 		matrice = append(matrice, cleanLine)
 
 	}
-	for i := 0 ; i < len(matrice) ; i ++ {
-		tempstr += Ponctuations(matrice[i])
+	tempstr2 := ""
+	for i := 0; i < len(matrice); i++ {
+		if i != len(matrice)-1 {
+			tempstr += Ponctuations(matrice[i]) + "\n"
+			tempstr2 += RemoveSpacesInsideQuotes(tempstr) + "\n"
+		
+		} else {
+			tempstr += Ponctuations(matrice[i])
+			tempstr2 += RemoveSpacesInsideQuotes(tempstr) 
+		}
 	}
-	fmt.Printf("%#v\n", matrice)
-	return tempstr
+	return tempstr2
 }

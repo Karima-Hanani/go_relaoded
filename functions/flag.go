@@ -8,7 +8,7 @@ import (
 func Flag(line []string) []string {
 	for i := 0; i < len(line); i++ {
 		op := line[i]
-		if op == "(cap)" || op == "(low)" || op == "(up)" {
+		if op == "(cap)" || op == "(low)" || op == "(up)" || op == "(hex)" || op == "(bin)"{
 			if i != 0 {
 				switch op {
 				case "(cap)":
@@ -17,15 +17,6 @@ func Flag(line []string) []string {
 					line[i-1] = strings.ToLower(line[i-1])
 				case "(up)":
 					line[i-1] = strings.ToUpper(line[i-1])
-				}
-			}
-			line = append(line[:i], line[i+1:]...)
-			i--
-			continue
-		}
-		if op == "(hex)" || op == "(bin)" {
-			if i != 0 {
-				switch op {
 				case "(hex)":
 					n, err := strconv.ParseInt(line[i-1], 16, 64)
 					if err != nil {

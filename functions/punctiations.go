@@ -1,7 +1,5 @@
 package project
 
-import "fmt"
-
 func Ponctuations(slicee []string) string {
 	tempstr := ""
 	tempslice := []string{}
@@ -19,7 +17,7 @@ func Ponctuations(slicee []string) string {
 	}
 
 	for i := 0; i < len(tempslice); i++ {
-		if tempslice[i] != "," {
+		if tempslice[i] != "," && tempslice[i] != "." && tempslice[i] != ";" && tempslice[i] != "!" && tempslice[i] != "?" && tempslice[i] != ":" {
 			continue
 		}
 		if i > 0 && tempslice[i-1] == " " {
@@ -35,8 +33,5 @@ func Ponctuations(slicee []string) string {
 	for _, ch := range tempslice {
 		result += ch
 	}
-
-	fmt.Printf("%#v\n ", tempslice)
-	fmt.Println(tempstr)
 	return result
 }
