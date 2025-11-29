@@ -1,81 +1,87 @@
 package project
 
-func IsLetter(c rune) int {
-	if (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') {
-		return 1
-	}
-	return 0
-}
+import (
+	"unicode"
+)
 
-func IsQuotePosition(b []rune, i int) int {
-	if i > 0 && i < len(b)-1 {
-		if IsLetter(b[i-1]) == 1 && IsLetter(b[i+1]) == 1 {
-			return 0
-		}
-	}
-	return 1
-}
+func SingleQuotes(s string) string {
+	runes := []rune(s)
+	out := make([]rune, 0, len(runes))
 
-func RemoveSpacesInsideQuotes(s string) string {
-	b := []rune(s)
+	for i := 0; i < len(runes); i++ {
+		r := runes[i]
 
-	var quotes []int
-	for i := 0; i < len(b); i++ {
-		if b[i] == '\'' && IsQuotePosition(b, i) == 1 {
-			quotes = append(quotes, i)
-		}
-	}
-
-	if len(quotes) < 2 {
-		return s
-	}
-
-	offset := 0
-
-	for i := 0; i+1 < len(quotes); i += 2 {
-		start := quotes[i] - offset
-		end := quotes[i+1] - offset
-
-		left := start + 1
-		right := end - 1
-
-		leadingSpaces := 0
-		for left <= right && b[left] == ' ' {
-			left++
-			leadingSpaces++
-		}
-
-		trailingSpaces := 0
-		for right >= left && b[right] == ' ' {
-			right--
-			trailingSpaces++
-		}
-
-		totalSpacesToRemove := leadingSpaces + trailingSpaces
-
-		if totalSpacesToRemove > 0 {
-			j := start + 1
-			for k := left; k <= right; k++ {
-				b[j] = b[k]
-				j++
+		if r == ' ' {
+			if len(out) > 0 && out[len(out)-1] == '\'' {
+				j := i + 1
+				for j < len(runes) && runes[j] == ' ' {
+					j++
+				}
+				if j < len(runes) && IsPunc(runes[j]) {
+					continue
+				}
 			}
+			out = append(out, ' ')
+			continue
+		}
 
-			b[j] = '\''
+		if r != '\'' {
+			out = append(out, r)
+			continue
+		}
+
+		if IsApostrophe(runes, i) {
+			out = append(out, '\'')
+			continue
+		}
+
+		j := i + 1
+		for j < len(runes) {
+			if runes[j] == '\'' && !IsApostrophe(runes, j) {
+				break
+			}
 			j++
+		}
+		if j == len(runes) { 
+			out = append(out, '\'')
+			continue
+		}
 
-			for k := end + 1; k < len(b); k++ {
-				b[j] = b[k]
-				j++
-			}
+		start, end := i+1, j
+		for start < end && runes[start] == ' ' {
+			start++
+		}
+		for end > start && runes[end-1] == ' ' {
+			end--
+		}
 
-			for j < len(b) {
-				b[j] = ' '
-				j++
-			}
+		if i > 0 && IsWordChar(runes[i-1]) && !IsPunc(runes[i-1]) &&
+			(len(out) == 0 || out[len(out)-1] != ' ') {
+			out = append(out, ' ')
+		}
 
-			offset += totalSpacesToRemove
+		out = append(out, '\'')
+		out = append(out, runes[start:end]...)
+		out = append(out, '\'')
+
+		i = j
+
+		if i+1 < len(runes) && IsWordChar(runes[i+1]) && !IsPunc(runes[i+1]) {
+			out = append(out, ' ')
 		}
 	}
 
-	return string(b)
+	return string(out)
+}
+
+func IsApostrophe(runes []rune, i int) bool {
+	return i > 0 && i+1 < len(runes) && IsWordChar(runes[i-1]) && IsWordChar(runes[i+1])
+}
+
+func IsWordChar(r rune) bool {
+	return unicode.IsLetter(r) || unicode.IsDigit(r)
+}
+
+func IsPunc(r rune) bool {
+	return r == '.' || r == ',' || r == '!' || r == '?' || r == ';' || r == ':'
 }
