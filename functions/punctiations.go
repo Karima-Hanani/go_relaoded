@@ -17,7 +17,8 @@ func Ponctuations(slicee []string) string {
 	}
 
 	for i := 0; i < len(tempslice); i++ {
-		if tempslice[i] != "," && tempslice[i] != "." && tempslice[i] != ";" && tempslice[i] != "!" && tempslice[i] != "?" && tempslice[i] != ":" {
+		ch := tempslice[i]
+		if ch != "," && ch != "." && ch != ":" && ch != ";" && ch != "!" && ch != "?" {
 			continue
 		}
 		if i > 0 && tempslice[i-1] == " " {
